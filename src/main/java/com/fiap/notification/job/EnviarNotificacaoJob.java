@@ -1,5 +1,6 @@
 package com.fiap.notification.job;
 
+import com.fiap.notification.config.MensagemLog;
 import com.fiap.notification.gateway.NotificacaoGateway;
 import com.fiap.notification.gateway.NotificadorGateway;
 import com.fiap.notification.gateway.db.entity.NotificacaoEntity;
@@ -23,36 +24,38 @@ public class EnviarNotificacaoJob {
 
     @Scheduled(cron = "0 0 8 * * *", zone = "America/Sao_Paulo")
     public void enviarNotificacao() {
-        log.info("Iniciando Job...");
+        log.info(MensagemLog.INICIO_JOB);
         List<NotificacaoEntity> entityList = notificacaoGateway.buscarNotificacoesParaEnvio();
+
         for (NotificacaoEntity entity : entityList) {
             notificadorGateway.notificar(entity);
         }
-        log.info("Fim do Job");
+        log.info(MensagemLog.FIM_JOB);
     }
 
     @Scheduled(cron = "0 0 8 * * *", zone = "America/Sao_Paulo")
     public void enviarNotificacaoDiaAnterior() {
-        log.info("Iniciando Job...");
+        log.info(MensagemLog.INICIO_JOB);
         LocalDateTime inicioAmanha = LocalDate.now().plusDays(1).atStartOfDay();
         LocalDateTime fimAmanha = LocalDate.now().plusDays(1).atTime(LocalTime.MAX);
-
         List<NotificacaoEntity> entityList = notificacaoGateway.buscarNotificacoesDiaAnterior(inicioAmanha, fimAmanha);
+
         for (NotificacaoEntity entity : entityList) {
             notificadorGateway.notificarDiaAnterior(entity);
         }
-        log.info("Fim do Job");
+        log.info(MensagemLog.FIM_JOB);
     }
 
     @Scheduled(cron = "0 0 20 * * *", zone = "America/Sao_Paulo")
     public void cancelarConsultaNotificacao() {
-        log.info("Iniciando Job...");
+        log.info(MensagemLog.INICIO_JOB);
         LocalDateTime dataLimite = LocalDateTime.now().minusDays(3);
         List<NotificacaoEntity> entityList = notificacaoGateway.cancelarConsultas(dataLimite);
 
         for (NotificacaoEntity entity : entityList) {
             notificadorGateway.cancelarConsulta(entity);
         }
+        log.info(MensagemLog.FIM_JOB);
     }
 
 }
