@@ -14,19 +14,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  rabbitmq:
-    image: "rabbitmq:3-management"
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - "15672:15672"   # Interface de gerenciamento do RabbitMQ
-      - "5672:5672"     # Porta do RabbitMQ para comunicação
-    environment:
-      RABBITMQ_DEFAULT_USER: admin
-      RABBITMQ_DEFAULT_PASS: T~wU3Q/V=703'6@
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
-
 volumes:
   postgres_data:
-  rabbitmq-data:

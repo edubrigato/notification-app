@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationProperties {
 
-    private String notificationSendChannel = "supplier-out-0";
+    private String notificationSendChannel = "confirmacao-consulta-dlx";
 
 }

@@ -5,13 +5,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
 @NoArgsConstructor
 public class Notificacao {
 
-    private Long idNotificacao;
+    private UUID idNotificacao;
     private String nomePaciente;
     private String email;
     private String telefone;
