@@ -19,4 +19,6 @@ public interface NotificacaoRepository extends JpaRepository<NotificacaoEntity, 
 
     List<NotificacaoEntity> findAllByDataNotificacaoBeforeAndConfirmadaIsFalse(LocalDateTime dataLimite);
 
+    boolean existsByConsultaId(UUID consultaId);
+
 }

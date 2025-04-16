@@ -24,8 +24,10 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
 
     @Override
     public void salvarNotificacao(Notificacao notificacao) {
-        notificacaoRepository.save(NotificacaoMapper.INSTANCE.toEntity(notificacao));
-        log.info("Notificacao salvo com sucesso");
+        if (!existeNotificacao(notificacao.getConsultaId())) {
+            notificacaoRepository.save(NotificacaoMapper.INSTANCE.toEntity(notificacao));
+            log.info("Notificacao salvo com sucesso");
+        }
     }
 
     @Override
@@ -53,5 +55,9 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
     @Override
     public List<NotificacaoEntity> cancelarConsultas(LocalDateTime dataLimite){
         return notificacaoRepository.findAllByDataNotificacaoBeforeAndConfirmadaIsFalse(dataLimite);
+    }
+
+    private boolean existeNotificacao(UUID consultaId) {
+        return notificacaoRepository.existsByConsultaId(consultaId);
     }
 }

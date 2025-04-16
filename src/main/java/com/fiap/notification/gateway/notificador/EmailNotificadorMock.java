@@ -21,9 +21,6 @@ public class EmailNotificadorMock  implements NotificadorGateway {
     public void notificar(NotificacaoEntity notificacao) {
         log.info("Simulando envio de e-mail para: {}", notificacao.getEmail());
         log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getConsultaId());
-        NotificacaoEntity entity = notificacaoRepository.findByConsultaId(notificacao.getConsultaId());
-        entity.registrarEnvioNotificacao();
-        notificacaoRepository.save(entity);
     }
 
     @Override
