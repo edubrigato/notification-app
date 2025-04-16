@@ -19,14 +19,14 @@ public class NotificacaoEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private Long idNotificacao;
+    private UUID consultaId;
     private String nomePaciente;
     private String email;
     private String telefone;
     private String consulta;
     private String localConsulta;
     private String nomeMedico;
-    private LocalDateTime dataConsulta;
+    private LocalDateTime dataConsultaPadronizada;
     @Enumerated(EnumType.STRING)
     private TipoNotificacao tipoNotificacao;
     private LocalDateTime dataNotificacao;

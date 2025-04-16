@@ -28,7 +28,7 @@ public class EnviarNotificacaoJob {
         List<NotificacaoEntity> entityList = notificacaoGateway.buscarNotificacoesParaEnvio();
 
         for (NotificacaoEntity entity : entityList) {
-            notificadorGateway.notificar(entity);
+            //notificadorGateway.notificar(entity);
         }
         log.info(MensagemLog.FIM_JOB);
     }

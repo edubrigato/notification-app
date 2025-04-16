@@ -5,12 +5,13 @@ import com.fiap.notification.gateway.db.entity.NotificacaoEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public interface NotificacaoGateway {
 
     void salvarNotificacao(Notificacao notificacao);
 
-    void atualizarNotificacao(Long idNotificacao, boolean confirmada);
+    void atualizarNotificacao(UUID idNotificacao, boolean confirmada);
 
     List<NotificacaoEntity> buscarNotificacoesParaEnvio();
 

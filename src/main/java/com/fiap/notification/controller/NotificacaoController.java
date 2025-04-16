@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -17,8 +19,8 @@ public class NotificacaoController {
 
     @PatchMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> atualizarNotificacao(@RequestParam Long idNotificacao, @RequestParam boolean confirmada) {
-        atualizarNotificacaoUseCase.atualizarNotificacao(idNotificacao, confirmada);
+    public ResponseEntity<String> atualizarNotificacao(@RequestParam UUID consultaId, @RequestParam boolean confirmada) {
+        atualizarNotificacaoUseCase.atualizarNotificacao(consultaId, confirmada);
         log.info("Notificacao atualizada com sucesso");
         return new ResponseEntity<>("Agendamento Confirmado", HttpStatus.OK);
     }

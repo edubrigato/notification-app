@@ -20,24 +20,25 @@ public class EmailNotificadorMock  implements NotificadorGateway {
     @Override
     public void notificar(NotificacaoEntity notificacao) {
         log.info("Simulando envio de e-mail para: {}", notificacao.getEmail());
-        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getIdNotificacao());
-        notificacao.registrarEnvioNotificacao();
-        notificacaoRepository.save(notificacao);
+        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getConsultaId());
+        NotificacaoEntity entity = notificacaoRepository.findByConsultaId(notificacao.getConsultaId());
+        entity.registrarEnvioNotificacao();
+        notificacaoRepository.save(entity);
     }
 
     @Override
     public void notificarDiaAnterior(NotificacaoEntity notificacao) {
         log.info("Simulando envio de e-mail para: {}", notificacao.getEmail());
-        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getIdNotificacao());
+        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getConsultaId());
     }
 
     @Override
     public void cancelarConsulta(NotificacaoEntity notificacao) {
         log.info("Simulando envio de e-mail para: {}", notificacao.getEmail());
-        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getIdNotificacao());
+        log.info("Mensagem {}, url {}/{}", notificacao, URL, notificacao.getConsultaId());
         notificacao.recusarAgendamento();
         notificacaoRepository.save(notificacao);
-        notificacaoRetornoQueueGateway.send(notificacao.getIdNotificacao(), notificacao.isConfirmada());
+        notificacaoRetornoQueueGateway.send(notificacao.getConsultaId(), notificacao.isConfirmada());
     }
 
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -28,8 +29,8 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
     }
 
     @Override
-    public void atualizarNotificacao(Long idNotificacao, boolean confirmada) {
-        NotificacaoEntity entity = notificacaoRepository.findByIdNotificacao(idNotificacao);
+    public void atualizarNotificacao(UUID idNotificacao, boolean confirmada) {
+        NotificacaoEntity entity = notificacaoRepository.findByConsultaId(idNotificacao);
         if (confirmada) {
             entity.confirmarAgendamento();
         } else {
@@ -46,7 +47,7 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
 
     @Override
     public List<NotificacaoEntity> buscarNotificacoesDiaAnterior(LocalDateTime inicio, LocalDateTime fim) {
-        return notificacaoRepository.findAllByConfirmadaTrueAndDataConsultaBetween(inicio, fim);
+        return notificacaoRepository.findAllByConfirmadaTrueAndDataConsultaPadronizadaBetween(inicio, fim);
     }
 
     @Override
