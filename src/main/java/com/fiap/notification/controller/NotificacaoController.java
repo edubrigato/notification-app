@@ -21,7 +21,8 @@ public class NotificacaoController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> atualizarNotificacao(@RequestParam UUID consultaId, @RequestParam boolean confirmada) {
         atualizarNotificacaoUseCase.atualizarNotificacao(consultaId, confirmada);
+        String mensagem = confirmada ? "Agendamento confirmado" : "Agendamento recusado";
         log.info("Notificacao atualizada com sucesso");
-        return new ResponseEntity<>("Agendamento Confirmado", HttpStatus.OK);
+        return new ResponseEntity<>(mensagem, HttpStatus.OK);
     }
 }

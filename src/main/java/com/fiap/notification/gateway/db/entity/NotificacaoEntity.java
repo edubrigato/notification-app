@@ -2,6 +2,7 @@ package com.fiap.notification.gateway.db.entity;
 
 import com.fiap.notification.domain.TipoNotificacao;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 public class NotificacaoEntity  {
 
     @Id
@@ -33,17 +35,4 @@ public class NotificacaoEntity  {
     private LocalDateTime dataRecusa;
     private boolean confirmada;
 
-    public void registrarEnvioNotificacao() {
-        this.dataNotificacao = LocalDateTime.now();
-        this.confirmada = false;
-    }
-
-    public void confirmarAgendamento() {
-        this.confirmada = true;
-    }
-
-    public void recusarAgendamento() {
-        this.confirmada = false;
-        this.dataRecusa = LocalDateTime.now();
-    }
 }

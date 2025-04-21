@@ -13,11 +13,7 @@ public interface NotificacaoRepository extends JpaRepository<NotificacaoEntity, 
 
     NotificacaoEntity findByConsultaId(UUID consultaId);
 
-    List<NotificacaoEntity> findAllByDataNotificacaoIsNull();
-
-    List<NotificacaoEntity> findAllByConfirmadaTrueAndDataConsultaPadronizadaBetween(LocalDateTime inicio, LocalDateTime fim);
-
-    List<NotificacaoEntity> findAllByDataNotificacaoBeforeAndConfirmadaIsFalse(LocalDateTime dataLimite);
+    List<NotificacaoEntity> findAllByDataNotificacaoBeforeAndDataRecusaIsNull(LocalDateTime dataLimite);
 
     boolean existsByConsultaId(UUID consultaId);
 

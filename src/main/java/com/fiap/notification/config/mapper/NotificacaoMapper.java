@@ -11,4 +11,5 @@ public interface NotificacaoMapper {
     NotificacaoMapper INSTANCE = Mappers.getMapper(NotificacaoMapper.class);
 
     NotificacaoEntity toEntity(Notificacao notificacao);
+    Notificacao toDomain(NotificacaoEntity entity);
 }

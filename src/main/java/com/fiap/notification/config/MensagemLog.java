@@ -1,9 +1,8 @@
 package com.fiap.notification.config;
 
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
 public final class MensagemLog {
+
+    private MensagemLog() {}
 
     //job
     public static final String INICIO_JOB = "Iniciando job...";

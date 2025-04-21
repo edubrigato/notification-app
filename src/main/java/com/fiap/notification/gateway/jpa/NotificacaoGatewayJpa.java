@@ -3,7 +3,6 @@ package com.fiap.notification.gateway.jpa;
 import com.fiap.notification.config.mapper.NotificacaoMapper;
 import com.fiap.notification.domain.Notificacao;
 import com.fiap.notification.gateway.NotificacaoGateway;
-import com.fiap.notification.gateway.db.entity.NotificacaoEntity;
 import com.fiap.notification.gateway.db.repository.NotificacaoRepository;
 import com.fiap.notification.gateway.queue.INotificacaoRetornoQueueGateway;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
     @Override
     public void salvarNotificacao(Notificacao notificacao) {
         if (!existeNotificacao(notificacao.getConsultaId())) {
+            notificacao.setDataNotificacao();
             notificacaoRepository.save(NotificacaoMapper.INSTANCE.toEntity(notificacao));
             log.info("Notificacao salvo com sucesso");
         }
@@ -32,29 +32,19 @@ public class NotificacaoGatewayJpa implements NotificacaoGateway {
 
     @Override
     public void atualizarNotificacao(UUID idNotificacao, boolean confirmada) {
-        NotificacaoEntity entity = notificacaoRepository.findByConsultaId(idNotificacao);
+        Notificacao domain = NotificacaoMapper.INSTANCE.toDomain(notificacaoRepository.findByConsultaId(idNotificacao));
         if (confirmada) {
-            entity.confirmarAgendamento();
+            domain.confirmarAgendamento();
         } else {
-            entity.recusarAgendamento();
+            domain.recusarAgendamento();
         }
         notificacaoRetornoQueueGateway.send(idNotificacao, confirmada);
-        notificacaoRepository.save(entity);
+        notificacaoRepository.save(NotificacaoMapper.INSTANCE.toEntity(domain));
     }
 
     @Override
-    public List<NotificacaoEntity> buscarNotificacoesParaEnvio() {
-        return notificacaoRepository.findAllByDataNotificacaoIsNull();
-    }
-
-    @Override
-    public List<NotificacaoEntity> buscarNotificacoesDiaAnterior(LocalDateTime inicio, LocalDateTime fim) {
-        return notificacaoRepository.findAllByConfirmadaTrueAndDataConsultaPadronizadaBetween(inicio, fim);
-    }
-
-    @Override
-    public List<NotificacaoEntity> cancelarConsultas(LocalDateTime dataLimite){
-        return notificacaoRepository.findAllByDataNotificacaoBeforeAndConfirmadaIsFalse(dataLimite);
+    public List<Notificacao> cancelarConsultas(LocalDateTime dataLimite){
+        return notificacaoRepository.findAllByDataNotificacaoBeforeAndDataRecusaIsNull(dataLimite).stream().map(NotificacaoMapper.INSTANCE::toDomain).toList();
     }
 
     private boolean existeNotificacao(UUID consultaId) {

@@ -1,6 +1,5 @@
 package com.fiap.notification.domain.strategy;
 
-import com.fiap.notification.config.mapper.NotificacaoMapper;
 import com.fiap.notification.domain.Notificacao;
 import com.fiap.notification.domain.TipoNotificacao;
 import com.fiap.notification.gateway.NotificadorGateway;
@@ -20,6 +19,6 @@ public class ConfirmacaoConsultaStrategy implements NotificacaoStrategy{
 
     @Override
     public void executar(Notificacao notificacao) {
-        notificadorGateway.notificar(NotificacaoMapper.INSTANCE.toEntity(notificacao));
+        notificadorGateway.notificar(notificacao);
     }
 }

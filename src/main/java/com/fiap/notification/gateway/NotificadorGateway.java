@@ -1,12 +1,12 @@
 package com.fiap.notification.gateway;
 
-import com.fiap.notification.gateway.db.entity.NotificacaoEntity;
+import com.fiap.notification.domain.Notificacao;
+
+import java.util.UUID;
 
 public interface NotificadorGateway {
 
-    void notificar(NotificacaoEntity notificacao);
+    void notificar(Notificacao notificacao);
 
-    void notificarDiaAnterior(NotificacaoEntity notificacao);
-
-    void cancelarConsulta(NotificacaoEntity notificacao);
+    void cancelarConsulta(UUID consultaId);
 }
